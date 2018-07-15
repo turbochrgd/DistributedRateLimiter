@@ -27,7 +27,7 @@ A simple distributed rate limiter. This is a proof-of-concept implementation and
 12. The framework will publish customer behavior ONLY when the decision is ALLOW. The customer behavior will be published to an SQS queue.
 13. Each machine in the fleet will run a scheduled job (every N milliseconds) to consume the customer behavior payload from the SQS queue and update the actual customer behavior in DyanmoDB.
 14. To save from concurrent updates, only the machine that has been elected the leader will consume behavior payload and update the customer behavior data in DynamoDB.
-15. A simple HighestIPAddressInLastMinuteLeaderElectionAlgorithm (as described in the code but NOT IMPLEMENTED) will ensure that there is ALWAYS only one leader.
+15. A simple HighestIPAddressInLastMinuteLeaderElectionAlgorithm (as described in the code but NOT IMPLEMENTED) will ensure that there is ALWAYS only one leader. This algorithm can leverage the failure detection library implemented in <a href="https://github.com/turbochrgd/MyFailureDetector">MyFailureDetector</a>
 16. For the implementation of this proof-of-concept meant to be run from a single machine, a default leader election algorithm is used which will not work in case of multiple machines in the fleet.
 17. Two simple APIs have been created as an example of how this framework can be used. For a real system, an annotation and pointcut based decision making is ideal, but that is not implemented here. 
 18. The code is not of the best quality since I am time boxed.
