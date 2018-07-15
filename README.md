@@ -1,5 +1,6 @@
 # Distributed Rate Limiter
 
+A simple distributed rate limiter. This is a proof-of-concept implementation and has no metrics or operational data points. It is assumed that CLIENT_ID is provided in the request to the framework.
 
 <h2>Framework requirements</h2>
 
@@ -45,4 +46,14 @@
 ![alt text](https://raw.githubusercontent.com/turbochrgd/DistributedRateLimiter/master/system_diagrams/sqs_1.png)
 
 
+<h2>Configuration Data Model</h2>
 
+1. Configuration data is store in the table CLIENT_ID_TOKEN_BUCKET in DynamoDB.
+2. A separate service (ConfigurationService) is responsible to update the client configurations. This service has not been implemented here.
+3. The ConfigurationService will de-normalize the configurations and store them in DynamoDB. See #6 for details.
+4. This framework will update the customer behavior only in the same table and not the configuration.
+5. Configuration data + Customer behavior data is stored in the same record in DynamoDB.
+6. Data is stored in de-normalized form. Hash key of the table is <API_NAME>:<METHOD> and range key is <CLIENT_ID>.
+7. We store a separate record for each such combination.
+8. A default configuration record is present and used for any unknown CLIENT_ID. 
+9. De-normalizing the configuration and behavior data makes querying DynamoDB easier and reduces latency as well as keeps the framework simple.
