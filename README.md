@@ -37,9 +37,11 @@
 <h2>System design diagrams</h2>
 
 <h3>Framework diagram</h3>
+
 ![alt text](https://raw.githubusercontent.com/turbochrgd/DistributedRateLimiter/master/system_diagrams/system_diagram.png)
 
 <h3>Client behavior updator diagram</h3>
+
 ![alt text](https://raw.githubusercontent.com/turbochrgd/DistributedRateLimiter/master/system_diagrams/sqs_1.png)
 
 
