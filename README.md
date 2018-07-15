@@ -57,3 +57,8 @@ A simple distributed rate limiter. This is a proof-of-concept implementation and
 7. We store a separate record for each such combination.
 8. A default configuration record is present and used for any unknown CLIENT_ID. 
 9. De-normalizing the configuration and behavior data makes querying DynamoDB easier and reduces latency as well as keeps the framework simple.
+
+<h2>Libraries used</h2>
+
+1. aws-java-sdk-bundle-1.11.339
+2. guava-23.0
