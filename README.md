@@ -58,6 +58,170 @@ A simple distributed rate limiter. This is a proof-of-concept implementation and
 8. A default configuration record is present and used for any unknown CLIENT_ID. 
 9. De-normalizing the configuration and behavior data makes querying DynamoDB easier and reduces latency as well as keeps the framework simple.
 
+<h3>Example configuration data</h3>
+
+<strong> Default configuration for createOrder API for POST method </strong>
+
+```
+{
+  Item: {
+    hashKey=createOrder: POST,
+    clientId=default,
+    payload={
+      apiName=createOrder,
+      clientId=default,
+      hour={
+        callsInPeriod=58,
+        lastUpdated=1531628311236,
+        maxAllowedCallsInPeriod=200,
+        rate=0.0002777777777777778,
+        lastUpdatedBurst=1531627030466,
+        maxAllowedRateInPeriod=0.0002777777777777778
+      },
+      method=POST,
+      minute={
+        callsInPeriod=19,
+        lastUpdated=1531628311236,
+        maxAllowedCallsInPeriod=50,
+        rate=0.000833333333333333,
+        lastUpdatedBurst=1531628291837,
+        maxAllowedRateInPeriod=0.000833333333333333
+      },
+      second={
+        callsInPeriod=1,
+        lastUpdated=1531628311236,
+        maxAllowedCallsInPeriod=2,
+        rate=0.0006807351940095302,
+        lastUpdatedBurst=1531628311236,
+        maxAllowedRateInPeriod=0.01
+      }
+    }
+  }
+}
+```
+
+<strong> Configuration for CLIENT_ID="client2" for createOrder API for POST method </strong>
+
+```
+{
+  Item: {
+    hashKey=createOrder: POST,
+    clientId=client2,
+    payload={
+      apiName=createOrder,
+      clientId=client2,
+      hour={
+        callsInPeriod=15,
+        lastUpdated=1531628314716,
+        maxAllowedCallsInPeriod=200,
+        rate=0.0002777777777777778,
+        lastUpdatedBurst=1531628298089,
+        maxAllowedRateInPeriod=0.0002777777777777778
+      },
+      method=POST,
+      minute={
+        callsInPeriod=15,
+        lastUpdated=1531628314716,
+        maxAllowedCallsInPeriod=50,
+        rate=0.000833333333333333,
+        lastUpdatedBurst=1531628298089,
+        maxAllowedRateInPeriod=0.000833333333333333
+      },
+      second={
+        callsInPeriod=3,
+        lastUpdated=1531628314716,
+        maxAllowedCallsInPeriod=2,
+        rate=0.003743789013047646,
+        lastUpdatedBurst=1531628314412,
+        maxAllowedRateInPeriod=0.01
+      }
+    }
+  }
+}
+```
+
+<strong> Default configuration for getOrders API for GET method </strong>
+
+```
+{
+  Item: {
+    hashKey=getOrders: GET,
+    clientId=default,
+    payload={
+      apiName=getOrders,
+      clientId=default,
+      hour={
+        callsInPeriod=50,
+        lastUpdated=1531628311542,
+        maxAllowedCallsInPeriod=200,
+        rate=0.0002777777777777778,
+        lastUpdatedBurst=1531627030926,
+        maxAllowedRateInPeriod=0.0002777777777777778
+      },
+      method=GET,
+      minute={
+        callsInPeriod=18,
+        lastUpdated=1531628311542,
+        maxAllowedCallsInPeriod=50,
+        rate=0.000833333333333333,
+        lastUpdatedBurst=1531628292069,
+        maxAllowedRateInPeriod=0.000833333333333333
+      },
+      second={
+        callsInPeriod=1,
+        lastUpdated=1531628311542,
+        maxAllowedCallsInPeriod=2,
+        rate=0.0007627765064836003,
+        lastUpdatedBurst=1531628311542,
+        maxAllowedRateInPeriod=0.01
+      }
+    }
+  }
+}
+```
+
+<strong> Configuration for CLIENT_ID="client2" for getOrders API for GET method </strong>
+
+```
+{
+  Item: {
+    hashKey=getOrders: GET,
+    clientId=client2,
+    payload={
+      apiName=getOrders,
+      clientId=client2,
+      hour={
+        callsInPeriod=14,
+        lastUpdated=1531628314650,
+        maxAllowedCallsInPeriod=200,
+        rate=0.0002777777777777778,
+        lastUpdatedBurst=1531628298178,
+        maxAllowedRateInPeriod=0.0002777777777777778
+      },
+      method=GET,
+      minute={
+        callsInPeriod=14,
+        lastUpdated=1531628314650,
+        maxAllowedCallsInPeriod=50,
+        rate=0.000833333333333333,
+        lastUpdatedBurst=1531628298178,
+        maxAllowedRateInPeriod=0.000833333333333333
+      },
+      second={
+        callsInPeriod=2,
+        lastUpdated=1531628314650,
+        maxAllowedCallsInPeriod=2,
+        rate=0.00043159257660768235,
+        lastUpdatedBurst=1531628314502,
+        maxAllowedRateInPeriod=0.01
+      }
+    }
+  }
+}
+```
+
+
+
 <h2>Libraries used</h2>
 
 1. aws-java-sdk-bundle-1.11.339
