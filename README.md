@@ -1,4 +1,7 @@
-Framework requirements:
+# Distributed Rate Limiter
+
+
+<h2>Framework requirements</h2>
 
 1. Should be able to limit API call rate per-client for each API and REST method (verb) in a distributed system.
 2. Should be able to limit API call rate for each endpoint.
@@ -7,7 +10,7 @@ Framework requirements:
 5. Should be able to be included in any API with ease.
 
 
-Design considerations:
+<h2>Design considerations</h2>
 
 1. For a distributed rate limiting framework to work, we need to store the client behavioral data (API call pattern, numbers, rate) and configuration in a highly available datastore. The datastore should support very low latencies in order to not impact the actual working of the APIs. In this implementation I choose to use AWS DynamoDB as the choice of datastore to store customer configuration and behavior.
 2. Once the customer behavior data and configuration is available, the framework will make a decision about the current request. A decision can be made to ALLOW or DENY the request.
@@ -24,13 +27,20 @@ Design considerations:
 13. Each machine in the fleet will run a scheduled job (every N milliseconds) to consume the customer behavior payload from the SQS queue and update the actual customer behavior in DyanmoDB.
 14. To save from concurrent updates, only the machine that has been elected the leader will consume behavior payload and update the customer behavior data in DynamoDB.
 15. A simple HighestIPAddressInLastMinuteLeaderElectionAlgorithm (as described in the code but NOT IMPLEMENTED) will ensure that there is ALWAYS only one leader.
-16. For the implementation of proof-of-concept, a default leader election algorithm is used which will not work in case of multiple machines in the fleet.
+16. For the implementation of this proof-of-concept meant to be run from a single machine, a default leader election algorithm is used which will not work in case of multiple machines in the fleet.
 17. Two simple APIs have been created as an example of how this framework can be used. For a real system, an annotation and pointcut based decision making is ideal, but that is not implemented here. 
 18. The code is not of the best quality since I am time boxed.
 19. Running the Main.main() class will give a demo of the framework.
 20. Client configuration data has been added to config/ folder which can be imported to DynamoDB.
 21. For very high scaling, we can move our datastore to self-manager Redis backed cache since DyanmoDB can be cost prohibitive. SQS can be moved to Amazon Kinesis for higher throughput and scaling for consumers.
 
-System design diagrams:
+<h2>System design diagrams</h2>
+
+<h3>Framework diagram</h3>
+![alt text](https://raw.githubusercontent.com/turbochrgd/DistributedRateLimited/master/system-design/system_diagram.png)
+
+<h3>Client behavior updator diagram</h3>
+![alt text](https://raw.githubusercontent.com/turbochrgd/DistributedRateLimited/master/system-design/sqs_1.png)
+
 
 
